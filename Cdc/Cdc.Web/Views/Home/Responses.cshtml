@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Cdc.Web.Models.Response>
+
+@{
+    ViewBag.Title = "Responses";
+}
+
+<h2>Responses</h2>
+
+<p>
+    @Html.ActionLink("Add New", "AddResponse")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Subject Name
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Content)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TeachingSubject.TeachingSubjectName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Author)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Content)
+        </td>
+    </tr>
+}
+
+</table>

@@ -195,6 +195,7 @@
     <Compile Include="BLL\CdcParentService.cs" />
     <Compile Include="BLL\CdcSystemService.cs" />
     <Compile Include="BLL\CdcTeacherService.cs" />
+    <Compile Include="BLL\CdcUserService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="Models\Child.cs">
       <DependentUpon>CdcModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\HomeViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Lesson.cs">
       <DependentUpon>CdcModel.tt</DependentUpon>
@@ -326,6 +328,11 @@
     <Content Include="Views\Manage\GetSchedule.cshtml" />
     <Content Include="Views\Manage\MakePayment.cshtml" />
     <Content Include="Views\Manage\TeacherSchedule.cshtml" />
+    <Content Include="Views\Home\Schedule.cshtml" />
+    <Content Include="Views\Home\Subjects.cshtml" />
+    <Content Include="Views\Home\Teachers.cshtml" />
+    <Content Include="Views\Home\Responses.cshtml" />
+    <Content Include="Views\Home\AddResponse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

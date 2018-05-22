@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Cdc.Web.Models.TeachingSubject>
+
+@{
+    ViewBag.Title = "Subjects";
+}
+
+<h2>Subjects</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Teacher
+        </th>
+        <th>
+            Subject Name
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MinAge)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaxAge)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @(item.Teacher.FirstName+" "+item.Teacher.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TeachingSubjectName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MinAge)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaxAge)
+        </td>
+    </tr>
+}
+
+</table>
