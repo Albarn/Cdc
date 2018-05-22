@@ -19,6 +19,7 @@ namespace Cdc.Web.Controllers
         private ApplicationUserManager _userManager;
         private CdcManagerService manager = new CdcManagerService();
         private CdcSystemService cdcSystem = new CdcSystemService();
+        private CdcParentService parent = new CdcParentService();
 
         public ManageController()
         {
@@ -77,7 +78,7 @@ namespace Cdc.Web.Controllers
             if (roles.Contains("parent"))
             {
                 Child child = cdcSystem.GetChild(User.Identity.Name);
-                model.Balance = 0;
+                model.Balance = parent.GetBalance(User.Identity.Name);
                 model.BirthDate = child.BirthDate;
                 model.Discount = child.Discount;
                 model.FirstName = child.FirstName;
@@ -123,14 +124,7 @@ namespace Cdc.Web.Controllers
         [Authorize(Roles = "manager")]
         public ActionResult RegisterChild(RegisterChildViewModel childForm)
         {
-            try
-            {
-                manager.RegisterChild(childForm);
-            }
-            catch (Exception ex)
-            {
-                return new HttpNotFoundResult(ex.Message);
-            }
+            manager.RegisterChild(childForm);
             return RedirectToAction("Index");
         }
 
@@ -145,14 +139,7 @@ namespace Cdc.Web.Controllers
         [Authorize(Roles = "manager")]
         public ActionResult RegisterTeacher(RegisterTeacherViewModel teacherForm)
         {
-            try
-            {
-                manager.RegisterTeacher(teacherForm);
-            }
-            catch (Exception ex)
-            {
-                return new HttpNotFoundResult(ex.Message);
-            }
+            manager.RegisterTeacher(teacherForm);
             return RedirectToAction("Index");
         }
 
@@ -167,14 +154,7 @@ namespace Cdc.Web.Controllers
         [Authorize(Roles = "manager")]
         public ActionResult AddSubject(AddSubjectViewModel subjectForm)
         {
-            try
-            {
-                manager.AddSubject(subjectForm);
-            }
-            catch (Exception ex)
-            {
-                return new HttpNotFoundResult(ex.Message);
-            }
+            manager.AddSubject(subjectForm);
             return RedirectToAction("Index");
         }
 
@@ -189,14 +169,8 @@ namespace Cdc.Web.Controllers
         [Authorize(Roles = "manager")]
         public ActionResult AddLesson(AddLessonViewModel lessonForm)
         {
-            try
-            {
-                manager.AddLesson(lessonForm);
-            }
-            catch (Exception ex)
-            {
-                return new HttpNotFoundResult(ex.Message);
-            }
+            manager.AddLesson(lessonForm);
+            
             return RedirectToAction("Index");
         }
 
@@ -212,14 +186,7 @@ namespace Cdc.Web.Controllers
         public ActionResult RecordChildForLesson(
             RecordChildForLessonViewModel form)
         {
-            try
-            {
-                manager.RecordChildForLesson(form);
-            }
-            catch (Exception ex)
-            {
-                return new HttpNotFoundResult(ex.Message);
-            }
+            manager.RecordChildForLesson(form);
             return RedirectToAction("Index");
         }
 
@@ -234,14 +201,8 @@ namespace Cdc.Web.Controllers
         [Authorize(Roles = "manager")]
         public ActionResult SetDiscount(SetDiscountViewModel discountForm)
         {
-            try
-            {
-                manager.SetDiscount(discountForm.Email, discountForm.Discount);
-            }
-            catch (Exception ex)
-            {
-                return new HttpNotFoundResult(ex.Message);
-            }
+            manager.SetDiscount(discountForm.Email, discountForm.Discount);
+            
             return RedirectToAction("Index");
         }
 
@@ -257,37 +218,46 @@ namespace Cdc.Web.Controllers
         [ActionName("Statistics")]
         public ActionResult StatisticsPost(StatisticsViewModel statistics)
         {
-            try
-            {
-                statistics.Income = manager.GetIncome(statistics.From, statistics.To);
-            }
-            catch (Exception ex)
-            {
-                return new HttpNotFoundResult(ex.Message);
-            }
+            statistics.Income = manager.GetIncome(statistics.From, statistics.To);
+            
             return RedirectToAction("Statistics", statistics);
         }
 
         [HttpGet]
-        [Authorize(Roles = "manager")]
+        [Authorize(Roles = "manager,teacher")]
         public ActionResult PublishNews()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "manager")]
+        [Authorize(Roles = "manager,teacher")]
         public ActionResult PublishNews(PublishNewsViewModel newsForm)
         {
-            try
-            {
-                manager.PublishNews(newsForm.SubjectName,
+            manager.PublishNews(newsForm.SubjectName,
                     newsForm.Content);
-            }
-            catch(Exception ex)
-            {
-                return new HttpNotFoundResult(ex.Message);
-            }
+            return RedirectToAction("Index");
+        }
+        
+        [HttpGet]
+        [Authorize(Roles = "parent")]
+        public ActionResult GetSchedule()
+        {
+            return View(parent.GetSchedule(User.Identity.Name));
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "parent")]
+        public ActionResult MakePayment()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "parent")]
+        public ActionResult MakePayment(decimal sum)
+        {
+            parent.MakePayment(User.Identity.Name, sum);
             return RedirectToAction("Index");
         }
 

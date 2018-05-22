@@ -6,4 +6,13 @@
 
 <h1 class="text-danger">Error.</h1>
 <h2 class="text-danger">An error occurred while processing your request.</h2>
+<p>
+    @{
+        Exception e;
+        for (e = Model.Exception;
+            e.InnerException != null;
+            e = e.InnerException) { }
+        <span>@e.Message</span>
+    }
+</p>
 

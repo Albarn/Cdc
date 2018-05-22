@@ -13,7 +13,7 @@ namespace Cdc.Web.Models
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
         public double Discount { get; set; }
-        public double Balance { get; set; }
+        public decimal Balance { get; set; }
         public string Role { get; set; }
     }
 

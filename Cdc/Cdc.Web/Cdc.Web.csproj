@@ -192,6 +192,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="BLL\CdcManagerService.cs" />
+    <Compile Include="BLL\CdcParentService.cs" />
     <Compile Include="BLL\CdcSystemService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -321,6 +322,8 @@
     <Content Include="Views\Manage\SetDiscount.cshtml" />
     <Content Include="Views\Manage\Statistics.cshtml" />
     <Content Include="Views\Manage\PublishNews.cshtml" />
+    <Content Include="Views\Manage\GetSchedule.cshtml" />
+    <Content Include="Views\Manage\MakePayment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
