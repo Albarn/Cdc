@@ -194,6 +194,7 @@
     <Compile Include="BLL\CdcManagerService.cs" />
     <Compile Include="BLL\CdcParentService.cs" />
     <Compile Include="BLL\CdcSystemService.cs" />
+    <Compile Include="BLL\CdcTeacherService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -324,6 +325,7 @@
     <Content Include="Views\Manage\PublishNews.cshtml" />
     <Content Include="Views\Manage\GetSchedule.cshtml" />
     <Content Include="Views\Manage\MakePayment.cshtml" />
+    <Content Include="Views\Manage\TeacherSchedule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

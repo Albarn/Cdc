@@ -73,5 +73,14 @@
                 @Html.ActionLink("Make Payment", "MakePayment")
             </dd>
         }
+        @if (Model.Role.Contains("teacher"))
+        {
+            <dd>
+                @Html.ActionLink("Publish news", "PublishNews")
+            </dd>
+            <dd>
+                @Html.ActionLink("Get schedule", "TeacherSchedule")
+            </dd>
+        }
     </dl>
 </div>

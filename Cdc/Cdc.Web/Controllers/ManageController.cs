@@ -20,6 +20,7 @@ namespace Cdc.Web.Controllers
         private CdcManagerService manager = new CdcManagerService();
         private CdcSystemService cdcSystem = new CdcSystemService();
         private CdcParentService parent = new CdcParentService();
+        private CdcTeacherService teacher = new CdcTeacherService();
 
         public ManageController()
         {
@@ -259,6 +260,13 @@ namespace Cdc.Web.Controllers
         {
             parent.MakePayment(User.Identity.Name, sum);
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "teacher")]
+        public ActionResult TeacherSchedule()
+        {
+            return View(teacher.GetSchedule(User.Identity.Name));
         }
 
         protected override void Dispose(bool disposing)
