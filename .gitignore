@@ -1,8 +1,8 @@
 
 Cdc/packages/
 
-Cdc.Web/bin/
+Cdc/Cdc.Web/bin/
 
-Cdc.Web/obj/
+Cdc/Cdc.Web/obj/
 
 Cdc/.vs/
