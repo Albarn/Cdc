@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EntityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EntityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -296,12 +296,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="getBalance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="smallmoney">
-          <Parameter Name="ChildId" Type="int" Mode="In" />
-        </Function>
-        <Function Name="getIncome" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="smallmoney">
+        <Function Name="GetCdcIncome" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="from" Type="datetime" Mode="In" />
           <Parameter Name="to" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="GetChildBalance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ChildId" Type="nvarchar" Mode="In" />
         </Function>
         <EntityContainer Name="EntityModelStoreContainer">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -370,8 +370,7 @@
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EntityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -624,7 +623,7 @@
           <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
           <End Role="Child" Type="Self.Child" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="CdcContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
@@ -680,13 +679,20 @@
             <End Role="Lesson" EntitySet="Lessons" />
             <End Role="Child" EntitySet="Children" />
           </AssociationSet>
+          <FunctionImport Name="GetCdcIncome" ReturnType="Collection(Decimal)">
+            <Parameter Name="from" Mode="In" Type="DateTime" />
+            <Parameter Name="to" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GetChildBalance" ReturnType="Collection(Decimal)">
+          <Parameter Name="ChildId" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="EntityModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="EntityModelStoreContainer" CdmEntityContainer="CdcContext">
           <EntitySetMapping Name="AspNetRoles">
             <EntityTypeMapping TypeName="EntityModel.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
@@ -816,6 +822,8 @@
               <ScalarProperty Name="ChildId" ColumnName="ChildId" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="GetCdcIncome" FunctionName="EntityModel.Store.GetCdcIncome" />
+          <FunctionImportMapping FunctionImportName="GetChildBalance" FunctionName="EntityModel.Store.GetChildBalance" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

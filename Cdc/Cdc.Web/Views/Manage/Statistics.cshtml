@@ -1,0 +1,48 @@
+﻿@model Cdc.Web.Models.StatisticsViewModel
+
+@{
+    ViewBag.Title = "Statistics";
+}
+
+<h2>Statistics</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.From, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.From, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.From, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.To, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.To, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.To, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Get Income" class="btn btn-default" />
+            </div>
+        </div>
+        <span>Total Income for period: @Model.Income</span>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to Profile", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

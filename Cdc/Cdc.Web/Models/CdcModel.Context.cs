@@ -12,11 +12,13 @@ namespace Cdc.Web.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
-    public partial class Entities : DbContext
+    public partial class CdcContext : DbContext
     {
-        public Entities()
-            : base("name=Entities")
+        public CdcContext()
+            : base("name=CdcContext")
         {
         }
     
@@ -36,5 +38,27 @@ namespace Cdc.Web.Models
         public virtual DbSet<Response> Responses { get; set; }
         public virtual DbSet<Teacher> Teachers { get; set; }
         public virtual DbSet<TeachingSubject> TeachingSubjects { get; set; }
+    
+        public virtual ObjectResult<Nullable<decimal>> GetCdcIncome(Nullable<System.DateTime> from, Nullable<System.DateTime> to)
+        {
+            var fromParameter = from.HasValue ?
+                new ObjectParameter("from", from) :
+                new ObjectParameter("from", typeof(System.DateTime));
+    
+            var toParameter = to.HasValue ?
+                new ObjectParameter("to", to) :
+                new ObjectParameter("to", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("GetCdcIncome", fromParameter, toParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> GetChildBalance(string childId)
+        {
+            var childIdParameter = childId != null ?
+                new ObjectParameter("ChildId", childId) :
+                new ObjectParameter("ChildId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("GetChildBalance", childIdParameter);
+        }
     }
 }

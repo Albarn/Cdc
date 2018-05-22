@@ -12,5 +12,57 @@
     <dl class="dl-horizontal">
         <dt>Email:</dt>
         <dd>@Model.Email</dd>
+        <dt>Role:</dt>
+        <dd>@Model.Role</dd>
+        @if (Model.Role.Contains("parent")||Model.Role.Contains("teacher"))
+        {
+            <dt>First name:</dt>
+            <dd>@Model.FirstName</dd>
+            <dt>Last name:</dt>
+            <dd>@Model.LastName</dd>
+        }
+        @if (Model.Role.Contains("parent"))
+        {
+            <dt>Birth date:</dt>
+            <dd>@Model.BirthDate</dd>
+            <dt>Discount:</dt>
+            <dd>@Model.Discount</dd>
+            <dt>Balance:</dt>
+            <dd>@Model.Balance</dd>
+        }
+        <dt>Menu:</dt>
+        @if (Model.Role.Contains("admin"))
+        {
+            <dd>
+                @Html.ActionLink("Register manager", "RegisterManager")
+            </dd>
+        }
+        @if (Model.Role.Contains("manager"))
+        {
+            <dd>
+                @Html.ActionLink("Register child", "RegisterChild")
+            </dd>
+            <dd>
+                @Html.ActionLink("Register teacher", "RegisterTeacher")
+            </dd>
+            <dd>
+                @Html.ActionLink("Add subject", "AddSubject")
+            </dd>
+            <dd>
+                @Html.ActionLink("Add lesson", "AddLesson")
+            </dd>
+            <dd>
+                @Html.ActionLink("Record child for lesson", "RecordChildForLesson")
+            </dd>
+            <dd>
+                @Html.ActionLink("Set discount for child", "SetDiscount")
+            </dd>
+            <dd>
+                @Html.ActionLink("Statistics", "Statistics")
+            </dd>
+            <dd>
+                @Html.ActionLink("Publish news", "PublishNews")
+            </dd>
+        }
     </dl>
 </div>

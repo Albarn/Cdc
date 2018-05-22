@@ -53,6 +53,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -189,6 +191,8 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="BLL\CdcManagerService.cs" />
+    <Compile Include="BLL\CdcSystemService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -196,8 +200,56 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AspNetRole.cs">
+      <DependentUpon>CdcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUser.cs">
+      <DependentUpon>CdcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserClaim.cs">
+      <DependentUpon>CdcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserLogin.cs">
+      <DependentUpon>CdcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CdcModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CdcModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CdcModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CdcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CdcModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CdcModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Child.cs">
+      <DependentUpon>CdcModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Lesson.cs">
+      <DependentUpon>CdcModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\News.cs">
+      <DependentUpon>CdcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Payment.cs">
+      <DependentUpon>CdcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Response.cs">
+      <DependentUpon>CdcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Teacher.cs">
+      <DependentUpon>CdcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TeachingSubject.cs">
+      <DependentUpon>CdcModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -208,10 +260,27 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\CdcModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CdcModel.edmx</DependentUpon>
+      <LastGenOutput>CdcModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\CdcModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CdcModel.edmx</DependentUpon>
+      <LastGenOutput>CdcModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EntityDeploy Include="Models\CdcModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CdcModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\CdcModel.edmx.diagram">
+      <DependentUpon>CdcModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -243,6 +312,15 @@
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Manage\RegisterManager.cshtml" />
+    <Content Include="Views\Manage\RegisterChild.cshtml" />
+    <Content Include="Views\Manage\RegisterTeacher.cshtml" />
+    <Content Include="Views\Manage\AddSubject.cshtml" />
+    <Content Include="Views\Manage\AddLesson.cshtml" />
+    <Content Include="Views\Manage\RecordChildForLesson.cshtml" />
+    <Content Include="Views\Manage\SetDiscount.cshtml" />
+    <Content Include="Views\Manage\Statistics.cshtml" />
+    <Content Include="Views\Manage\PublishNews.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -259,6 +337,9 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
